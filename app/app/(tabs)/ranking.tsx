@@ -1,22 +1,36 @@
 
 import { Image } from 'expo-image';
 import React, { useEffect, useState } from 'react';
-import { Dimensions } from 'react-native';
 import { ScrollView, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+
+import { createClient } from '@supabase/supabase-js';
 
 import { MaterialIcons } from '@expo/vector-icons';
 import CountryFlag from "react-native-country-flag";
 
-const { width, height } = Dimensions.get('window');
+const supabaseUrl = 'https://uxfgnnhbqutkuiedbrjx.supabase.co';
+const supabaseAnonKey = 'sb_publishable_3jNniYefGMbf_lvEqf4Zgw_wK_uRBT_';
+
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export default function App() {
   const [jugadores, setJugadores] = useState([]);
 
   useEffect(() => {
-    fetch('http://192.168.2.122:3000/jugadores')
-      .then(res => res.json())
-      .then(data => setJugadores(data))
-      .catch(console.error);
+    const fetchData = async () => {
+      const { data, error } = await supabase
+        .from('jugadores')
+        .select('*')
+        .order('ranking', { ascending: true });
+
+      if (error) {
+        console.error('Error al obtener datos:', error);
+      } else {
+        setJugadores(data);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -24,7 +38,7 @@ export default function App() {
       <ScrollView contentContainerStyle = {styles.body}>
         {jugadores.map((jugador, index) => (
           
-          <View key = {jugador.id} style = {[styles.containerJugador, index !== jugadores.length - 1 && { borderBottomWidth: 0 }]}>
+          <TouchableOpacity key = {jugador.id} style = {[styles.containerJugador, index !== jugadores.length - 1 && { borderBottomWidth: 0 }]}>
             
             <View style = {{ width: '100%', flexDirection: 'row', justifyContent: 'center' }}>
               
@@ -40,7 +54,7 @@ export default function App() {
               </View>
 
               <View style = {{ width: '30%', height: 100, justifyContent: 'center', alignItems: 'center' }}>
-                <Text style = {{ fontSize: 13 }}>{jugador.nombre}</Text>
+                <Text style = {{ fontSize: 13, fontWeight: 'bold' }}>{jugador.nombre}</Text>
               </View>
 
             </View>
@@ -59,7 +73,7 @@ export default function App() {
 
             </View>
 
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
 
