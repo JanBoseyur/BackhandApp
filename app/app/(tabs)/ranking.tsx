@@ -1,111 +1,91 @@
 
 import { Image } from 'expo-image';
 import React, { useEffect, useState } from 'react';
-import { Platform, StyleSheet, View, Text } from 'react-native';
+import { Dimensions } from 'react-native';
+import { ScrollView, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
+import { MaterialIcons } from '@expo/vector-icons';
 import CountryFlag from "react-native-country-flag";
+
+const { width, height } = Dimensions.get('window');
 
 export default function App() {
   const [jugadores, setJugadores] = useState([]);
 
   useEffect(() => {
-    fetch('http://192.168.2.105:3000/jugadores')
+    fetch('http://192.168.2.122:3000/jugadores')
       .then(res => res.json())
       .then(data => setJugadores(data))
       .catch(console.error);
   }, []);
 
   return (
-    <View style = {styles.body}>
-      {jugadores.map(jugador => (
-      
-        <View style = {styles.containerJugador}>
-
-          <View style = {styles.containerFoto}>
-            <Image
-              source = {{ uri: jugador.foto1 }}
-              style = {{ width: '100%', height: '100%'}}
-            />
-          </View>
-
-          <View style = {{ flexDirection: 'column', width: '100%'}}>
+    <View style = {{  }}>
+      <ScrollView contentContainerStyle = {styles.body}>
+        {jugadores.map((jugador, index) => (
+          
+          <View key = {jugador.id} style = {[styles.containerJugador, index !== jugadores.length - 1 && { borderBottomWidth: 0 }]}>
             
-            <View style = {styles.containerRank}>
-              <Text>{jugador.ranking}</Text>
+            <View style = {{ width: '100%', flexDirection: 'row', justifyContent: 'center' }}>
+              
+              <View style = {{ width: '10%', height: 100, justifyContent: 'center', alignItems: 'center' }}>
+                <Text style = {{ fontSize: 15, fontWeight: 'bold' }}>{jugador.ranking}.</Text>
+              </View>
+              
+              <View style = {{ width: '30%', height: 100, overflow: 'hidden'}}>
+                <Image
+                  source = {{ uri: jugador.foto1 }}
+                  style = {{ width: '100%', height: 200 }}
+                />
+              </View>
+
+              <View style = {{ width: '30%', height: 100, justifyContent: 'center', alignItems: 'center' }}>
+                <Text style = {{ fontSize: 13 }}>{jugador.nombre}</Text>
+              </View>
+
             </View>
 
-            <View style = {styles.containerPuntos}>
-              <Text>{jugador.puntos}</Text>
+            <View style = {{ width: '100%', flexDirection: 'row', justifyContent: 'center' }}>
+              
+              <View style = {{ marginVertical: 10, alignItems: 'center', marginHorizontal: 10}}>
+                <Text style = {{ fontSize: 13 }}>Puntos</Text>
+                <Text style = {{ fontWeight: 'bold' }}>{jugador.puntos}</Text>
+              </View>
+
+              <View style = {{ marginVertical: 10, alignItems: 'center', marginHorizontal: 10}}>
+                <Text style = {{ fontSize: 13 }}>Torneo Actual</Text>
+                <Text style = {{ fontWeight: 'bold' }}>{jugador.torneo_actual}</Text>
+              </View>
+
             </View>
 
           </View>
+        ))}
+      </ScrollView>
 
-           <View style = {{ flexDirection: 'column', width: '100%'}}>
-            
-            <View style = {styles.containerRank}>
-              <Text>{jugador.ranking}</Text>
-            </View>
-
-            <View style = {styles.containerPuntos}>
-              <Text>{jugador.puntos}</Text>
-            </View>
-
-          </View>
-
-        </View>
-
-      ))}
-    </View>
+    </View> 
   );
 }
 
 const styles = StyleSheet.create({
-  body: {    
-    color: 'black',
-
-    marginTop: '20%',
-    borderWidth: 2
+  body: {
+    paddingTop: '25%'
   },
 
   containerJugador: {
-    flexDirection: 'row',
+    flexDirection: 'column',
+
+    alignContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    textAlign: 'center',
+    justifyContent: 'center',
 
     width: '100%',
-    height: '100%'
+
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
   },
-
-  containerFoto: {
-    borderWidth: 2,
-    width: '25%',
-    height: '30%',
-  },
-
-  containerRank: {
-    borderWidth: 2,
-    width: '25%',
-    height: '10%',
-
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  containerNombre: {
-    borderWidth: 2,
-    width: '25%',
-    height: '10%',
-
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-  },
-
-  containerPuntos: {
-    borderWidth: 2,
-    width: '25%',
-    height: '10%',
-
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
 
 });
+

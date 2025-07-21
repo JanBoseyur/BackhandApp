@@ -1,9 +1,11 @@
 
 const express = require('express');
 const { Pool } = require('pg');
+const cors = require('cors');
 
 const app = express();
-app.use(express.json());
+
+app.use(cors());
 
 const db = new Pool({
   user: 'postgres',
@@ -14,7 +16,7 @@ const db = new Pool({
 });
 
 app.get('/jugadores', async (req, res) => {
-  const result = await db.query('SELECT * FROM jugadores');
+  const result = await db.query('SELECT * FROM jugadores ORDER BY ranking ASC');
   res.json(result.rows);
 });
 

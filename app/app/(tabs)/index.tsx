@@ -55,7 +55,7 @@ export default function HomeScreen() {
           
           <TextInput
             style = {styles.input}
-            placeholder = "abc1234"
+            placeholder = "pork1010"
             placeholderTextColor = "#888"
             secureTextEntry
           />
@@ -64,7 +64,10 @@ export default function HomeScreen() {
             <Text style = {styles.botonTexto}>Ingresar</Text>
           </TouchableOpacity>
 
-          <Text style = {styles.registroTexto}>¿No tienes cuenta? Regístrate aquí</Text>
+          <TouchableOpacity style = {styles.ContainerRegistroTexto}>
+            <Text style = {styles.registroTexto}>¿No tienes cuenta? Regístrate aquí</Text>
+          </TouchableOpacity>
+
         </View>
 
       </ScrollView>
@@ -150,10 +153,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
-  registroTexto: {
-    textAlign: 'center',
-    fontWeight: 'bold',
+  ContainerRegistroTexto: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
 
-    marginTop: 20,
+    width: '75%',
+    height: 40,
+    marginTop: 10,
+  },
+
+  registroTexto: {
+    fontWeight: 'bold',
   },
 });
