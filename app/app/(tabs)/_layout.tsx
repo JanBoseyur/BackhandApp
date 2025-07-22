@@ -13,6 +13,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions = {{
+        
         tabBarStyle: {
           backgroundColor: 'black',   
           height: 140,           

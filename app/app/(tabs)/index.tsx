@@ -23,7 +23,7 @@ export default function HomeScreen() {
       <ScrollView contentContainerStyle = {{ flexGrow: 1 }} keyboardShouldPersistTaps = "handled">
 
         <View style = {styles.banner}>
-          
+    
           <View style = {styles.containerLogo}>
             
             <Image
@@ -36,6 +36,7 @@ export default function HomeScreen() {
           <View style = {styles.containerTitulo}>
             <Text style = {styles.titulo}>Bolinha{'\n'}Backhand</Text>
           </View>
+          
         </View>
 
         <View style = {styles.formContainer}>
@@ -79,8 +80,6 @@ const styles = StyleSheet.create({
   banner: {
     backgroundColor: 'white',
     flexDirection: 'row',
-    
-    marginTop: '20%',
   },
 
   containerLogo: {
@@ -107,7 +106,7 @@ const styles = StyleSheet.create({
   formContainer: {
     backgroundColor: 'white',
 
-    marginTop: 50,
+    marginTop: 30,
     paddingHorizontal: 30,
     paddingVertical: 20,
   },

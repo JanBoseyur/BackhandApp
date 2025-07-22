@@ -15,11 +15,18 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={DefaultTheme}>
-      <Stack>
-        <Stack.Screen name = "(tabs)" options = {{ headerShown: false }} />
+    <ThemeProvider value = {DefaultTheme}>
+      
+      <Stack screenOptions = {{
+        headerStyle: { backgroundColor: 'black' },  
+        headerTintColor: 'white',                   
+        headerTitleAlign: 'center',
+      }}>
+
+        <Stack.Screen name = "(tabs)" options = {{ title: 'BolinhaBackhand', headerTitleAlign: 'center' }}/>
         <Stack.Screen name = "+not-found" />
       </Stack>
+
       <StatusBar style = "dark" />
     </ThemeProvider>
   );
